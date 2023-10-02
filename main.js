@@ -96,6 +96,7 @@ const move = (dx, dy, dr) => {
 };
 
 const createNewBlock = () => {
+  clearLine();
   ci = Math.trunc(Math.random() * 7 + 1);
   cr = Math.trunc(Math.random() * 4);
   cx = 4;
@@ -113,14 +114,37 @@ const createNewBlock = () => {
   }
 };
 
+const clearLine = () => {
+  for (y = 0; y < 20; y++) {
+    let removable = true;
+    for (x = 0; x < 10; x++) {
+      if (board[y][x] === 0) {
+        removable = false;
+        break;
+      }
+    }
+    if (removable) {
+      for (let j = y; j >= -1; j--) {
+        for (let x = 0; x < 10; x++) {
+          board[j][x] = j === -1 ? 0 : board[j - 1][x];
+        }
+      }
+      y--;
+    }
+  }
+};
+
 window.onload = () => {
   createNewBlock();
 
   setInterval(() => {
+    if (gameover) {
+      return;
+    }
     if (!move(0, 1, 0)) {
       createNewBlock();
     }
-  }, 100);
+  }, 1000);
 
   document.onkeydown = (e) => {
     if (gameover) return;
