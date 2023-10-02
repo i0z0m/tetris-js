@@ -95,8 +95,33 @@ const move = (dx, dy, dr) => {
   }
 };
 
+const createNewBlock = () => {
+  ci = Math.trunc(Math.random() * 7 + 1);
+  cr = Math.trunc(Math.random() * 4);
+  cx = 4;
+  cy = 0;
+  if (!putBlock(ci, cx, cy, cr)) {
+    gameover = true;
+    for (let y = 0; y < 20; y++) {
+      for (let x = 0; x < 10; x++) {
+        if (board[y][x]) {
+          board[y][x] = 1;
+        }
+      }
+    }
+    showBoard();
+  }
+};
+
 window.onload = () => {
-  putBlock(ci, cx, cy, cr);
+  createNewBlock();
+
+  setInterval(() => {
+    if (!move(0, 1, 0)) {
+      createNewBlock();
+    }
+  }, 100);
+
   document.onkeydown = (e) => {
     if (gameover) return;
     switch (e.key) {
@@ -110,7 +135,9 @@ window.onload = () => {
         move(0, 0, 1);
         break;
       case 'ArrowDown':
-        move(0, 1, 0);
+        if (!move(0, 1, 0)) {
+          createNewBlock();
+        }
         break;
       default:
         break;
