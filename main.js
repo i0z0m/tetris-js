@@ -39,7 +39,27 @@ const showBoard = () => {
   }
 };
 
-window.onload = () => {
-  showBoard();
+const blockShapes = [
+  [0, []],
+  [2, [-1, 0], [1, 0], [2, 0]], //tetris
+  [2, [-1, 0], [0, 1], [1, 1]], //key 1
+  [2, [-1, 0], [0, -1], [1, -1]], //key 2
+  [1, [0, 1], [1, 0], [1, 1]], // square
+  [4, [-1, 0], [1, 0], [1, 1]], //L1
+  [4, [-1, 0], [1, 0], [0, -1]], //L2
+  [4, [-1, 0], [0, 1], [0, -1]], //L2
+];
+
+const putBlock = (blockIndex, x, y, rotation, remove, action) => {
+  const blockShape = [...blockShapes[blockIndex]];
+  const rotateMax = blockShape.shift();
+  blockShape.unshift([0, 0]);
+  for (let [dx, dy] of blockShape) {
+    board[y + dy][x + dx] = blockIndex;
+  }
 };
 
+window.onload = () => {
+  putBlock(2, 3, 5, 0);
+  showBoard();
+};
