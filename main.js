@@ -22,8 +22,8 @@ const showBoard = () => {
         edgeColor = '#888';
         bgColor = '#ccc';
       } else {
-        edgeColor = 'hsl(${(v - 1) / 7 * 360}deg, 100%, 50%)';
-        bgColor = 'hsl(${(v - 1) / 7 * 360}deg, 100%, 70%)';
+        edgeColor = `hsl(${(v - 1) / 7 * 360}deg, 100%, 50%)`;
+        bgColor = `hsl(${(v - 1) / 7 * 360}deg, 100%, 70%)`;
       }
       const div = document.createElement('div');
       div.style.position = 'absolute';
