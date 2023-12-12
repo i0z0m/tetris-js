@@ -20,10 +20,33 @@ const showBoard = () => {
       let edgeColor, bgColor;
       if (v === 0) {
         edgeColor = '#888';
-        bgColor = '#ccc';
+        bgColor = '#000';
       } else {
-        edgeColor = `hsl(${((v - 1) / 7) * 360}deg, 100%, 50%)`;
-        bgColor = `hsl(${((v - 1) / 7) * 360}deg, 100%, 70%)`;
+        switch(v) {
+          case 1: // I型（シアン）
+            edgeColor = bgColor = 'hsl(180, 100%, 50%)';
+            break;
+          case 2: // O型（黄色）
+            edgeColor = bgColor = 'hsl(60, 100%, 50%)';
+            break;
+          case 3: // T型（紫）
+            edgeColor = bgColor = 'hsl(300, 100%, 50%)';
+            break;
+          case 4: // S型（緑）
+            edgeColor = bgColor = 'hsl(120, 100%, 50%)';
+            break;
+          case 5: // Z型（赤）
+            edgeColor = bgColor = 'hsl(0, 100%, 50%)';
+            break;
+          case 6: // J型（青）
+            edgeColor = bgColor = 'hsl(240, 100%, 50%)';
+            break;
+          case 7: // L型（オレンジ）
+            edgeColor = bgColor = 'hsl(30, 100%, 50%)';
+            break;
+          default:
+            edgeColor = bgColor = 'hsl(0, 0%, 50%)'; // 未知のブロックタイプのデフォルト色
+        }
       }
       const div = document.createElement('div');
       div.style.position = 'absolute';
@@ -32,7 +55,7 @@ const showBoard = () => {
       div.style.width = '24px';
       div.style.height = '24px';
       div.style.boxSizing = 'border-box';
-      div.style.border = `4px ridge ${edgeColor}`;
+      div.style.border = `2px ridge ${edgeColor}`;
       div.style.backgroundColor = bgColor;
       document.body.appendChild(div);
     }
@@ -106,7 +129,7 @@ const createNewBlock = () => {
     for (let y = 0; y < 20; y++) {
       for (let x = 0; x < 10; x++) {
         if (board[y][x]) {
-          board[y][x] = 1;
+          board[y][x] = 5;
         }
       }
     }
