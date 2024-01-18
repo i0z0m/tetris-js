@@ -191,18 +191,20 @@ window.onload = () => {
     }
   };
 
-// Disable Pull-to-Refresh
-document.addEventListener("touchmove", function (event) {
-  event.preventDefault();
-}, { passive: false });
+  // Disable Pull-to-Refresh
+  document.addEventListener("touchmove", function (event) {
+    event.preventDefault();
+  }, { passive: false });
 
   // ゲームコンテナを取得します
   const gameContainer = document.getElementById('gameContainer');
 
   // タッチイベントリスナーを追加します
   gameContainer.addEventListener('touchstart', handleTouchStart, false);
-  gameContainer.addEventListener('touchmove', handleTouchMove, false);
-};
+  gameContainer.addEventListener('touchmove', function(evt) {
+    evt.preventDefault(); // Pull-to-Refreshを無効化します
+    handleTouchMove(evt); // スワイプ操作を処理します
+  }, false);
 
 let xDown = null;
 let yDown = null;
