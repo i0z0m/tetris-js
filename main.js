@@ -189,7 +189,56 @@ window.onload = () => {
       default:
         break;
     }
-    e.preventDefault();
   };
-  showBoard();
+
+  // ゲームコンテナを取得します
+  const gameContainer = document.getElementById('gameContainer');
+
+  // タッチイベントリスナーを追加します
+  gameContainer.addEventListener('touchstart', handleTouchStart, false);
+  gameContainer.addEventListener('touchmove', handleTouchMove, false);
+};
+
+let xDown = null;
+let yDown = null;
+
+function handleTouchStart(evt) {
+  xDown = evt.touches[0].clientX;
+  yDown = evt.touches[0].clientY;
+};
+
+function handleTouchMove(evt) {
+  if (!xDown || !yDown) {
+    return;
+  }
+
+  let xUp = evt.touches[0].clientX;
+  let yUp = evt.touches[0].clientY;
+
+  let xDiff = xDown - xUp;
+  let yDiff = yDown - yUp;
+
+  if (Math.abs(xDiff) > Math.abs(yDiff)) {
+    if (xDiff > 0) {
+      /* 左スワイプ */
+      move(-1, 0, 0);
+    } else {
+      /* 右スワイプ */
+      move(1, 0, 0);
+    }
+  } else {
+    if (yDiff > 0) {
+      /* 上スワイプ */
+      move(0, 0, 1);
+    } else {
+      /* 下スワイプ */
+      if (!move(0, 1, 0)) {
+        createNewBlock();
+      }
+    }
+  }
+
+  /* 値をリセットします */
+  xDown = null;
+  yDown = null;
 };
