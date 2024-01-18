@@ -22,7 +22,7 @@ const showBoard = () => {
         edgeColor = '#888';
         bgColor = '#000';
       } else {
-        switch(v) {
+        switch (v) {
           case 1: // I型（シアン）
             edgeColor = bgColor = 'hsl(180, 100%, 50%)';
             break;
@@ -191,61 +191,61 @@ window.onload = () => {
     }
   };
 
-  // Disable Pull-to-Refresh
-  document.addEventListener("touchmove", function (event) {
-    event.preventDefault();
-  }, { passive: false });
-
   // ゲームコンテナを取得します
   const gameContainer = document.getElementById('gameContainer');
 
   // タッチイベントリスナーを追加します
   gameContainer.addEventListener('touchstart', handleTouchStart, false);
-  gameContainer.addEventListener('touchmove', function(evt) {
-    evt.preventDefault(); // Pull-to-Refreshを無効化します
-    handleTouchMove(evt); // スワイプ操作を処理します
-  }, false);
+  gameContainer.addEventListener(
+    'touchmove',
+    function (evt) {
+      evt.preventDefault(); // Pull-to-Refreshを無効化します
+      handleTouchMove(evt); // スワイプ操作を処理します
+    },
+    { passive: false }
+  ); // パッシブリスナーを無効にします
 
-let xDown = null;
-let yDown = null;
+  let xDown = null;
+  let yDown = null;
 
-function handleTouchStart(evt) {
-  xDown = evt.touches[0].clientX;
-  yDown = evt.touches[0].clientY;
-};
-
-function handleTouchMove(evt) {
-  if (!xDown || !yDown) {
-    return;
+  function handleTouchStart(evt) {
+    xDown = evt.touches[0].clientX;
+    yDown = evt.touches[0].clientY;
   }
 
-  let xUp = evt.touches[0].clientX;
-  let yUp = evt.touches[0].clientY;
-
-  let xDiff = xDown - xUp;
-  let yDiff = yDown - yUp;
-
-  if (Math.abs(xDiff) > Math.abs(yDiff)) {
-    if (xDiff > 0) {
-      /* 左スワイプ */
-      move(-1, 0, 0);
-    } else {
-      /* 右スワイプ */
-      move(1, 0, 0);
+  function handleTouchMove(evt) {
+    if (!xDown || !yDown) {
+      return;
     }
-  } else {
-    if (yDiff > 0) {
-      /* 上スワイプ */
-      move(0, 0, 1);
+
+    let xUp = evt.touches[0].clientX;
+    let yUp = evt.touches[0].clientY;
+
+    let xDiff = xDown - xUp;
+    let yDiff = yDown - yUp;
+
+    if (Math.abs(xDiff) > Math.abs(yDiff)) {
+      if (xDiff > 0) {
+        /* 左スワイプ */
+        move(-1, 0, 0);
+      } else {
+        /* 右スワイプ */
+        move(1, 0, 0);
+      }
     } else {
-      /* 下スワイプ */
-      if (!move(0, 1, 0)) {
-        createNewBlock();
+      if (yDiff > 0) {
+        /* 上スワイプ */
+        move(0, 0, 1);
+      } else {
+        /* 下スワイプ */
+        if (!move(0, 1, 0)) {
+          createNewBlock();
+        }
       }
     }
-  }
 
-  /* 値をリセットします */
-  xDown = null;
-  yDown = null;
+    /* 値をリセットします */
+    xDown = null;
+    yDown = null;
+  }
 };
