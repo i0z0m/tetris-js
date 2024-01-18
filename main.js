@@ -194,18 +194,15 @@ window.onload = () => {
     // ゲームコンテナを取得します
   const gameContainer = document.getElementById('gameContainer');
 
-  // タッチイベントリスナーを追加します
   gameContainer.addEventListener('touchstart', handleTouchStart, false);
-  gameContainer.addEventListener('touchmove', function(evt) {
-    evt.preventDefault(); // Pull-to-Refreshを無効化します
-    handleTouchMove(evt); // スワイプ操作を処理します
-  }, { passive: false }); // パッシブリスナーを無効にします
-
+  let xDown = null;
+  let yDown = null;
   function handleTouchStart(evt) {
     xDown = evt.touches[0].clientX;
     yDown = evt.touches[0].clientY;
   }
 
+  gameContainer.addEventListener('touchmove', handleTouchMove, false);
   function handleTouchMove(evt) {
     if (!xDown || !yDown) {
       return;
