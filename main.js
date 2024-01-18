@@ -191,6 +191,11 @@ window.onload = () => {
     }
   };
 
+// Disable Pull-to-Refresh
+document.addEventListener("touchmove", function (event) {
+  event.preventDefault();
+}, { passive: false });
+
   // ゲームコンテナを取得します
   const gameContainer = document.getElementById('gameContainer');
 
