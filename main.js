@@ -199,7 +199,7 @@ window.onload = () => {
   gameContainer.addEventListener(
     'touchmove',
     function (evt) {
-      evt.preventDefault(); // Pull-to-Refreshを無効化します
+      // evt.preventDefault(); // Pull-to-Refreshを無効化します
       handleTouchMove(evt); // スワイプ操作を処理します
     },
     { passive: false }
